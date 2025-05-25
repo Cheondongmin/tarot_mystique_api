@@ -1,5 +1,6 @@
 package com.hangtudy.app.interfaces.api.v1.common
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.hangtudy.app.interfaces.api.v1.exception.ExceptionCode
 import com.hangtudy.app.interfaces.api.v1.exception.ExceptionMessage
 import io.swagger.v3.oas.annotations.media.Schema
@@ -11,11 +12,13 @@ data class CommonRes<T>(
     val resultType: ResultType,
     @Schema(description = "반환 데이터")
     val data: T,
-    @Schema(description = "반환 메시지", defaultValue = "SUCCESS or error 메시지")
-    val exception: ExceptionMessage
+    @Schema(description = "반환 메시지 (실패시에만 포함)")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    val exception: ExceptionMessage? = null
 ) {
     override fun toString(): String {
-        return """
+        return if (exception != null) {
+            """
             {
                 "CommonRes": {
                     "resultType": "$resultType",
@@ -23,12 +26,22 @@ data class CommonRes<T>(
                     "exception": "$exception"
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
+        } else {
+            """
+            {
+                "CommonRes": {
+                    "resultType": "$resultType",
+                    "data": $data
+                }
+            }
+            """.trimIndent()
+        }
     }
 
     companion object {
         fun <T> success(data: T): CommonRes<T> {
-            return CommonRes(ResultType.SUCCESS, data, ExceptionMessage())
+            return CommonRes(ResultType.SUCCESS, data, null)
         }
 
         fun error(error: Exception, status: HttpStatus): CommonRes<Map<String, Any>> {
