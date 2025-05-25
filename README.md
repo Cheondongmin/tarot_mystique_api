@@ -112,7 +112,7 @@ Content-Type: application/json
 
 ### 시스템 상태 확인
 ```http
-GET /v1/api/health/check
+GET /api/v1/health/check
 ```
 
 **응답:**
