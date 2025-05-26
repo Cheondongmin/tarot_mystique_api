@@ -54,14 +54,12 @@ class TarotService(
 
             // 0 이상이면 텔레그램 메시지 전송
             if (count > 0) {
-                val message = "🔮 타로 활동 알림\n\n" +
-                        "최근 ${minutes}분 동안 ${count}건의 타로 활동이 있었습니다.\n\n" +
-                        "\uD83D\uDD70\uFE0F 도착 시간 \n" +
-                        " ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}"
-
+                val message = "🔮 별들의 속삭임이 감지되었습니다.\n\n" +
+                        "별빛 아래, ${minutes}번의 숨결 동안\n" +
+                        "${count}건의 의식이 거행되었습니다."
                 try {
                     messageSender.sendMessage(message)
-                    logger.info("타로 활동 알림 전송 완료 $count}건")
+                    logger.info("타로 활동 알림 전송 완료 ${count}건")
                 } catch (e: Exception) {
                     logger.error("텔레그램 메시지 전송 실패: ${e.message}", e)
                 }
