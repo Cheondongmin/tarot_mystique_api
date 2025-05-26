@@ -21,19 +21,7 @@
         </rollingPolicy>
     </appender>
 
-    <!-- API 요청 로그 파일 -->
-    <appender name="API_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/api_request.log</file>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/api_request-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <totalSizeCap>50MB</totalSizeCap>
-        </rollingPolicy>
-    </appender>
+
 
     <!-- 콘솔 로그 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -45,7 +33,6 @@
 
     <!-- API 로거 -->
     <logger name="com.hangtudy.config.RequestLoggingInterceptor" level="INFO" additivity="false">
-        <appender-ref ref="API_FILE"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
