@@ -39,7 +39,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%5p]){blue} %clr([%logger{30}:%line]){cyan} %msg%n</pattern>
+            <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%5p]){blue} %clr([%X{X-HIT-TRANSACTION-ID}]){yellow} %clr([%X{X-HTTP-METHOD}]){green} %clr([%X{X-HTTP-URL}]){magenta} %clr([%X{X-CLIENT-IP}]){red} %clr([%logger{30}:%line]){cyan} %msg%n</pattern>
         </encoder>
     </appender>
 

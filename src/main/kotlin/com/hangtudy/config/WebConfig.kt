@@ -8,14 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig(
     private val requestLoggingInterceptor: RequestLoggingInterceptor
 ) : WebMvcConfigurer {
-
+    
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(requestLoggingInterceptor)
-            .addPathPatterns("/api/**") // API 경로만 로깅
-            .excludePathPatterns(
-                "/api/health/**",
-                "/swagger-ui/**",
-                "/v3/api-docs/**"
-            ) // 제외할 경로들
+            .addPathPatterns("/api/**")  // API 경로에만 적용
     }
 }
