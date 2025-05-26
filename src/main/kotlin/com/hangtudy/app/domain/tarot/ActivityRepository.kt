@@ -1,4 +1,4 @@
-package com.hangtudy.app.domain.Tarot
+package com.hangtudy.app.domain.tarot
 
 interface ActivityRepository {
     fun save(activity: Activity)

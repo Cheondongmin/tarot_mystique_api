@@ -1,4 +1,4 @@
-package com.hangtudy.app.domain.Tarot
+package com.hangtudy.app.domain.tarot
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

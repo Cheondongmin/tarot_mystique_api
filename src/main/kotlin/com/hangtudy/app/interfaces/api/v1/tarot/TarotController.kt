@@ -5,12 +5,7 @@ import com.hangtudy.app.interfaces.api.v1.tarot.req.AddTarotReq
 import com.hangtudy.domain.Tarot.TarotService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/tarot")
@@ -26,10 +21,11 @@ class TarotController(
         return CommonRes.success("타로 데이터가 성공적으로 저장되었습니다.")
     }
 
-    @GetMapping("/count")
-    fun getRecentTarotCount(
-        @RequestParam(defaultValue = "10") minutes: Int
-    ): CommonRes<Long> {
-        return CommonRes.success(tarotService.getRecentTarotCount(minutes))
+    @GetMapping("/message")
+    fun addTarot(
+        @RequestParam(defaultValue = "메시지") msg: String
+    ): CommonRes<String> {
+        tarotService.sendMessage(msg)
+        return CommonRes.success("관리자에게 메시지가 성공적으로 전송 됐습니다.")
     }
 }

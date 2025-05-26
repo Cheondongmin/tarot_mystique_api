@@ -1,7 +1,7 @@
 package com.hangtudy.app.infrastructure.repository.tarot.persistence
 
-import com.hangtudy.app.domain.Tarot.Activity
-import com.hangtudy.app.domain.Tarot.ActivityRepository
+import com.hangtudy.app.domain.tarot.Activity
+import com.hangtudy.app.domain.tarot.ActivityRepository
 import com.hangtudy.app.infrastructure.repository.tarot.repository.ActivityMongoRepository
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
