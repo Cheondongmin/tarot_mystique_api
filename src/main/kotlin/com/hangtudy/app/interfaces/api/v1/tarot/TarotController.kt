@@ -2,6 +2,7 @@ package com.hangtudy.app.interfaces.api.v1.tarot
 
 import com.hangtudy.app.interfaces.api.v1.common.CommonRes
 import com.hangtudy.app.interfaces.api.v1.tarot.req.AddTarotReq
+import com.hangtudy.app.interfaces.api.v1.tarot.req.TarotMessageReq
 import com.hangtudy.domain.Tarot.TarotService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
@@ -21,11 +22,11 @@ class TarotController(
         return CommonRes.success("타로 데이터가 성공적으로 저장되었습니다.")
     }
 
-    @GetMapping("/message")
+    @PostMapping("/message")
     fun addTarot(
-        @RequestParam(defaultValue = "메시지") msg: String
+        @Valid @RequestBody req: TarotMessageReq,
     ): CommonRes<String> {
-        tarotService.sendMessage(msg)
+        tarotService.sendMessage(req.msg)
         return CommonRes.success("관리자에게 메시지가 성공적으로 전송 됐습니다.")
     }
 }
