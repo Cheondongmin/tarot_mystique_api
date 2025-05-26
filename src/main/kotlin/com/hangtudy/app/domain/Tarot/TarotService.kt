@@ -43,4 +43,12 @@ class TarotService(
             throw e
         }
     }
+
+    fun getRecentTarotCount(minutes: Int): Long {
+        return runCatching {
+            activityRepository.countRecentActivities(minutes)
+        }.onFailure { e ->
+            logger.error("getRecentTarotCount 처리 실패 : ${e.message}", e)
+        }.getOrDefault(0L)
+    }
 }

@@ -4,6 +4,7 @@ import com.hangtudy.app.domain.Tarot.Activity
 import com.hangtudy.app.domain.Tarot.ActivityRepository
 import com.hangtudy.app.infrastructure.repository.tarot.repository.ActivityMongoRepository
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class ActivityRepositoryImpl(
@@ -11,5 +12,10 @@ class ActivityRepositoryImpl(
 ) : ActivityRepository {
     override fun save(activity: Activity) {
         activityMongoRepository.save(activity)
+    }
+
+    override fun countRecentActivities(minutes: Int): Long {
+        val cutoffTime = LocalDateTime.now().minusMinutes(minutes.toLong())
+        return activityMongoRepository.countByCreatedAtAfter(cutoffTime)
     }
 }
