@@ -1,6 +1,6 @@
 package com.hangtudy.app.interfaces.api.v1.tarot
 
-import com.hangtudy.domain.Tarot.TarotService
+import com.hangtudy.app.domain.tarot.TarotService
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

@@ -1,10 +1,10 @@
-package com.hangtudy.domain.Tarot
+package com.hangtudy.app.domain.tarot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.hangtudy.app.domain.message.MessageSender
-import com.hangtudy.app.domain.tarot.Activity
-import com.hangtudy.app.domain.tarot.ActivityRepository
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -91,5 +91,13 @@ class TarotService(
         }.onFailure { e ->
             logger.error("sendMessage 처리 실패 : ${e.message}", e)
         }
+    }
+    
+    fun getTarotList(pageable: Pageable): Page<Activity> {
+        return runCatching {
+            activityRepository.findAll(pageable)
+        }.onFailure { e ->
+            logger.error("getTarotList 처리 실패 : ${e.message}", e)
+        }.getOrThrow()
     }
 }
