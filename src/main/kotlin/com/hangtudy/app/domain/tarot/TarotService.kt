@@ -71,7 +71,7 @@ class TarotService(
         }.getOrDefault(0L)
     }
 
-    fun sendMessage(message: String) {
+    fun sendMessage(message: String, userIp: String) {
         runCatching {
             val formattedMessage =
                 """
@@ -79,6 +79,9 @@ class TarotService(
                
                📜 편지 내용
                ${message}
+               
+               🌏 날아온 세계
+               ${userIp}
                
                🕰️ 도착 시간
                ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}

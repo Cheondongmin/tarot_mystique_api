@@ -57,7 +57,7 @@ class TarotController(
             logger.error("요청 Body JSON 변환 실패", e)
         }
         
-        tarotService.sendMessage(req.msg)
+        tarotService.sendMessage(req.msg, req.userIp)
         val response = CommonRes.success("관리자에게 메시지가 성공적으로 전송 됐습니다.")
         
         // 응답 Body JSON 로그
