@@ -1,6 +1,10 @@
 package com.hangtudy.config
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.Ordered
+import org.springframework.web.filter.CharacterEncodingFilter
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
@@ -12,5 +16,17 @@ class WebConfig(
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(requestLoggingInterceptor)
             .addPathPatterns("/api/**")  // API 경로에만 적용
+    }
+
+    @Bean("customCharacterEncodingFilter")
+    fun characterEncodingFilter(): FilterRegistrationBean<CharacterEncodingFilter> {
+        val filter = CharacterEncodingFilter().apply {
+            setEncoding("UTF-8")
+            setForceEncoding(true)
+        }
+        return FilterRegistrationBean(filter).apply {
+            order = Ordered.HIGHEST_PRECEDENCE
+            addUrlPatterns("/*")
+        }
     }
 }

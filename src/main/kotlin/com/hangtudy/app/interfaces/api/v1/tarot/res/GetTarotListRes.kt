@@ -29,7 +29,7 @@ data class GetTarotListRes(
         @Schema(description = "카드 목록")
         val cards: List<Activity.TarotCard>?,
         @Schema(description = "생성일시 (KST)")
-        val createAt: String
+        val createdAtKst: String
     ) {
         companion object {
             fun from(activity: Activity): TarotItemRes {
@@ -39,7 +39,7 @@ data class GetTarotListRes(
                     ipAddress = activity.ipAddress,
                     userContent = activity.userContent,
                     cards = activity.resultData?.cards,
-                    createAt = activity.createdAt.toString()
+                    createdAtKst = activity.createdAtKst.toString()
                 )
             }
         }
