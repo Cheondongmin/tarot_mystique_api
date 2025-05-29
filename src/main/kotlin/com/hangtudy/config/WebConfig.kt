@@ -10,7 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 class WebConfig(
-    private val requestLoggingInterceptor: RequestLoggingInterceptor
+    private val requestLoggingInterceptor: RequestLoggingInterceptor,
+    private val ipWhitelistFilter: IpWhitelistFilter
 ) : WebMvcConfigurer {
     
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -27,6 +28,14 @@ class WebConfig(
         return FilterRegistrationBean(filter).apply {
             order = Ordered.HIGHEST_PRECEDENCE
             addUrlPatterns("/*")
+        }
+    }
+    
+    @Bean("ipWhitelistFilterRegistration")
+    fun ipWhitelistFilterRegistration(): FilterRegistrationBean<IpWhitelistFilter> {
+        return FilterRegistrationBean(ipWhitelistFilter).apply {
+            order = Ordered.HIGHEST_PRECEDENCE + 1  // 인코딩 필터 다음에 실행
+            addUrlPatterns("/api/*")  // API 경로에만 적용
         }
     }
 }
