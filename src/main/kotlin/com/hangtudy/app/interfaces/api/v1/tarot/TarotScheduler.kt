@@ -20,14 +20,4 @@ class TarotScheduler(
             logger.error("타로 데이터 개수 조회 중 오류 발생: ${e.message}", e)
         }
     }
-
-//    @Scheduled(fixedRate = 5000) // 5초 = 5,000ms (테스트용)
-//    fun logRecentTarotCount() {
-//        try {
-//            val count = tarotService.getRecentTarotCount(180) // 3시간 = 180분
-//            logger.info("최근 3시간(180분) 이내 등록된 타로 데이터: ${count}개")
-//        } catch (e: Exception) {
-//            logger.error("타로 데이터 개수 조회 중 오류 발생: ${e.message}", e)
-//        }
-//    }
 }
