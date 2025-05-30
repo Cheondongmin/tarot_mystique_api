@@ -1,4 +1,4 @@
-package com.hangtudy.app.interfaces.api.v1.tarot
+package com.hangtudy.app.interfaces.api.v1.tarot.scheduler
 
 import com.hangtudy.app.domain.tarot.TarotService
 import org.slf4j.LoggerFactory
