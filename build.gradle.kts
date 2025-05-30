@@ -38,11 +38,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 	implementation("com.google.code.gson:gson:2.13.1")
 	implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
-	
-	// GraphQL 의존성 추가
-	implementation("org.springframework.boot:spring-boot-starter-graphql")
-	implementation("com.graphql-java:graphql-java-extended-scalars:21.0")
-	
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
