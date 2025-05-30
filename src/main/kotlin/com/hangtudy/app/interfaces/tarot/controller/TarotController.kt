@@ -1,15 +1,18 @@
-package com.hangtudy.app.interfaces.api.v1.tarot.controller
+package com.hangtudy.app.interfaces.tarot.controller
 
-import com.hangtudy.app.interfaces.api.v1.common.CommonRes
-import com.hangtudy.app.interfaces.api.v1.tarot.req.AddTarotReq
-import com.hangtudy.app.interfaces.api.v1.tarot.req.SendMessageReq
-import com.hangtudy.app.interfaces.api.v1.tarot.res.GetTarotListRes
 import com.hangtudy.app.domain.tarot.TarotService
+import com.hangtudy.app.interfaces.common.CommonRes
+import com.hangtudy.app.interfaces.tarot.req.AddTarotReq
+import com.hangtudy.app.interfaces.tarot.req.SendMessageReq
+import com.hangtudy.app.interfaces.tarot.res.GetTarotListRes
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/tarot")

@@ -1,8 +1,8 @@
-package com.hangtudy.app.interfaces.api.v1.common
+package com.hangtudy.app.interfaces.common
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.hangtudy.app.interfaces.api.v1.exception.ExceptionCode
-import com.hangtudy.app.interfaces.api.v1.exception.ExceptionMessage
+import com.hangtudy.app.interfaces.exception.ExceptionCode
+import com.hangtudy.app.interfaces.exception.ExceptionMessage
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.http.HttpStatus
 
@@ -41,15 +41,27 @@ data class CommonRes<T>(
 
     companion object {
         fun <T> success(data: T): CommonRes<T> {
-            return CommonRes(ResultType.SUCCESS, data, null)
+            return CommonRes(
+                ResultType.SUCCESS,
+                data,
+                null
+            )
         }
 
         fun error(error: Exception, status: HttpStatus): CommonRes<Map<String, Any>> {
-            return CommonRes(ResultType.FAIL, emptyMap(), ExceptionMessage(error, status))
+            return CommonRes(
+                ResultType.FAIL,
+                emptyMap(),
+                ExceptionMessage(error, status)
+            )
         }
 
         fun error(error: ExceptionCode, errorData: Any?): CommonRes<Map<String, Any>> {
-            return CommonRes(ResultType.FAIL, emptyMap(), ExceptionMessage(error, errorData))
+            return CommonRes(
+                ResultType.FAIL,
+                emptyMap(),
+                ExceptionMessage(error, errorData)
+            )
         }
     }
 }

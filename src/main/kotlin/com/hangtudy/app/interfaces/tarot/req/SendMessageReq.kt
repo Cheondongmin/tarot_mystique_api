@@ -1,4 +1,4 @@
-package com.hangtudy.app.interfaces.api.v1.tarot.req
+package com.hangtudy.app.interfaces.tarot.req
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size

@@ -1,9 +1,8 @@
-package com.hangtudy.app.interfaces.api.v1.tarot.controller
-
-import com.hangtudy.app.interfaces.api.v1.common.CommonRes
-import com.hangtudy.app.interfaces.api.v1.tarot.req.AddTarotReq
-import com.hangtudy.app.interfaces.api.v1.tarot.req.SendMessageReq
-import com.hangtudy.app.interfaces.api.v1.tarot.res.GetTarotListRes
+package com.hangtudy.app.interfaces.tarot.controller
+import com.hangtudy.app.interfaces.common.CommonRes
+import com.hangtudy.app.interfaces.tarot.req.AddTarotReq
+import com.hangtudy.app.interfaces.tarot.req.SendMessageReq
+import com.hangtudy.app.interfaces.tarot.res.GetTarotListRes
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content

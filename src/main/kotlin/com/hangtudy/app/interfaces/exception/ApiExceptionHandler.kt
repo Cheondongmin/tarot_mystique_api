@@ -1,10 +1,10 @@
-package com.hangtudy.app.interfaces.api.v1.exception
+package com.hangtudy.app.interfaces.exception
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import com.hangtudy.app.interfaces.api.v1.common.CommonRes
+import com.hangtudy.app.interfaces.common.CommonRes
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

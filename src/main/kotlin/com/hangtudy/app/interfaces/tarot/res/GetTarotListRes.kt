@@ -1,9 +1,11 @@
-package com.hangtudy.app.interfaces.api.v1.tarot.res
+package com.hangtudy.app.interfaces.tarot.res
 
 import com.hangtudy.app.domain.tarot.Activity
 import io.swagger.v3.oas.annotations.media.Schema
+import lombok.NoArgsConstructor
 
 @Schema(description = "타로 목록 조회 응답")
+@NoArgsConstructor
 data class GetTarotListRes(
     @Schema(description = "타로 목록")
     val items: List<TarotItemRes>,
