@@ -80,7 +80,7 @@ class TarotService(
                📜 편지 내용
                ${message}
                
-               🌏 날아온 세계
+               👣 발자국
                ${userIp}
                
                🕰️ 도착 시간
