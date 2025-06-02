@@ -1,6 +1,6 @@
 package com.hangtudy.app.interfaces.tarot.res
 
-import com.hangtudy.app.domain.tarot.Activity
+import com.hangtudy.app.domain.tarot.activity.Activity
 import io.swagger.v3.oas.annotations.media.Schema
 import lombok.NoArgsConstructor
 

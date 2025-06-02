@@ -1,4 +1,4 @@
-package com.hangtudy.app.domain.tarot
+package com.hangtudy.app.domain.tarot.activity
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

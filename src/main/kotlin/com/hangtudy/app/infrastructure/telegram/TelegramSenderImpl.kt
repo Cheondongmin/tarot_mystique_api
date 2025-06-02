@@ -1,7 +1,7 @@
 package com.hangtudy.app.infrastructure.telegram
 
 import com.google.gson.JsonObject
-import com.hangtudy.app.domain.message.MessageSender
+import com.hangtudy.app.domain.tarot.message.MessageSender
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody

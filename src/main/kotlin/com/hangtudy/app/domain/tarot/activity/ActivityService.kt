@@ -1,0 +1,64 @@
+package com.hangtudy.app.domain.tarot.activity
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Service
+
+@Service
+class ActivityService(
+    private val activityRepository: ActivityRepository,
+    private val objectMapper: ObjectMapper
+) {
+    private val logger = LoggerFactory.getLogger(ActivityService::class.java)
+
+    fun addTarot(
+        category: String,
+        userIp: String,
+        userContent: String,
+        resultContent: String
+    ) {
+        runCatching {
+            // JSON 파싱 시도
+            val parsedResult = runCatching {
+                objectMapper.readValue(resultContent, Activity.TarotResult::class.java)
+            }.onFailure { e ->
+                logger.error("JSON 파싱 실패: ${e.message}", e)
+            }.getOrNull()
+
+            // Activity 생성
+            val activity = Activity.create(
+                category = category,
+                ipAddress = userIp,
+                userContent = userContent,
+                resultContent = resultContent,
+                resultData = parsedResult
+            )
+
+            // 저장
+            activityRepository.save(activity)
+        }.onFailure { e ->
+            logger.error("addTarot 전체 처리 실패: ${e.message}", e)
+            throw e
+        }
+    }
+
+    fun getTarotList(pageable: Pageable): Page<Activity> {
+        return runCatching {
+            activityRepository.findAll(pageable)
+        }.onFailure { e ->
+            logger.error("getTarotList 처리 실패: ${e.message}", e)
+            throw e
+        }.getOrThrow()
+    }
+
+    fun countRecentActivities(minutes: Int): Long {
+        return runCatching {
+            activityRepository.countRecentActivities(minutes)
+        }.onFailure { e ->
+            logger.error("countRecentActivities 처리 실패: ${e.message}", e)
+            throw e
+        }.getOrThrow()
+    }
+}

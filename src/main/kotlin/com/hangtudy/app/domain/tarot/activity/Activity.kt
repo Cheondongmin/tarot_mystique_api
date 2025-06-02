@@ -1,4 +1,4 @@
-package com.hangtudy.app.domain.tarot
+package com.hangtudy.app.domain.tarot.activity
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -47,7 +47,7 @@ data class Activity(
         ): Activity {
             val nowUtc = LocalDateTime.now()
             val nowKst = nowUtc.plusHours(9)
-            
+
             return Activity(
                 category = category.trim(),
                 ipAddress = ipAddress.trim(),
@@ -61,14 +61,14 @@ data class Activity(
             )
         }
     }
-    
+
     data class TarotResult(
         @Field("cards")
         val cards: List<TarotCard>,
-        
+
         @Field("interpretation")
         val interpretation: String,
-        
+
         @Field("timestamp")
         val timestamp: String
     )
@@ -76,13 +76,13 @@ data class Activity(
     data class TarotCard(
         @Field("name")
         val name: String,
-        
+
         @Field("nameKr")
         val nameKr: String,
-        
+
         @Field("reversed")
         val reversed: Boolean,
-        
+
         @Field("interpretation")
         val interpretation: String
     )
