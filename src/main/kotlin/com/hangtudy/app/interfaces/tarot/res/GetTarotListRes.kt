@@ -1,5 +1,7 @@
 package com.hangtudy.app.interfaces.tarot.res
 
+import com.hangtudy.app.application.dto.TarotItemDto
+import com.hangtudy.app.application.dto.TarotListDto
 import com.hangtudy.app.domain.tarot.activity.Activity
 import io.swagger.v3.oas.annotations.media.Schema
 import lombok.NoArgsConstructor
@@ -18,6 +20,18 @@ data class GetTarotListRes(
     @Schema(description = "전체 페이지 수")
     val totalPages: Int
 ) {
+    companion object {
+        fun from(dto: TarotListDto): GetTarotListRes {
+            return GetTarotListRes(
+                items = dto.items.map { TarotItemRes.from(it) },
+                totalCount = dto.totalCount,
+                page = dto.page,
+                pageSize = dto.pageSize,
+                totalPages = dto.totalPages
+            )
+        }
+    }
+
     @Schema(description = "타로 항목")
     data class TarotItemRes(
         @Schema(description = "ID")
@@ -34,14 +48,14 @@ data class GetTarotListRes(
         val createdAtKst: String
     ) {
         companion object {
-            fun from(activity: Activity): TarotItemRes {
+            fun from(dto: TarotItemDto): TarotItemRes {
                 return TarotItemRes(
-                    id = activity.id,
-                    category = activity.category,
-                    ipAddress = activity.ipAddress,
-                    userContent = activity.userContent,
-                    cards = activity.resultData?.cards,
-                    createdAtKst = activity.createdAtKst.toString()
+                    id = dto.id,
+                    category = dto.category,
+                    ipAddress = dto.ipAddress,
+                    userContent = dto.userContent,
+                    cards = dto.cards,
+                    createdAtKst = dto.createdAtKst
                 )
             }
         }

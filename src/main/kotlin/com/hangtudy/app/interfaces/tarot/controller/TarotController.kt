@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class TarotController(
     private val tarotFacade: TarotFacade
 ) : TarotControllerInterface {
-    
+
     override fun addTarot(
         @Valid @RequestBody req: AddTarotReq,
         httpRequest: HttpServletRequest
@@ -32,12 +32,13 @@ class TarotController(
         tarotFacade.sendMessage(req.msg, req.userIp)
         return CommonRes.success("관리자에게 메시지가 성공적으로 전송 됐습니다.")
     }
-    
+
     override fun getTarotList(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") limit: Int
     ): CommonRes<GetTarotListRes> {
-        val response = tarotFacade.getTarotList(page, limit)
+        val dto = tarotFacade.getTarotList(page, limit)
+        val response = GetTarotListRes.from(dto)
         return CommonRes.success(response)
     }
 }
