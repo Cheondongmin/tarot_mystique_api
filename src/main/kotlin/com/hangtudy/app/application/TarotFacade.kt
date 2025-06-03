@@ -22,12 +22,14 @@ class TarotFacade(
         userContent: String,
         resultContent: String
     ) {
-        runCatching {
-            activityService.addTarot(category, userIp, userContent, resultContent)
-        }.onFailure { e ->
-            logger.error("addTarot 처리 실패: ${e.message}", e)
-            throw e
-        }
+        activityService.addTarot(category, userIp, userContent, resultContent)
+            .onSuccess { 
+                logger.info("✅ Tarot creation completed successfully") 
+            }
+            .onFailure { e ->
+                logger.error("❌ Tarot creation failed: ${e.message}", e)
+                throw e
+            }
     }
 
     fun getTarotList(page: Int, limit: Int): TarotListDto {

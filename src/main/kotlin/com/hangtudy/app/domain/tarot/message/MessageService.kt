@@ -2,6 +2,7 @@ package com.hangtudy.app.domain.tarot.message
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -12,6 +13,7 @@ class MessageService(
 ) {
     private val logger = LoggerFactory.getLogger(MessageService::class.java)
 
+    @Transactional
     fun sendMessage(message: String, userIp: String) {
         runCatching {
             val formattedMessage =
@@ -38,9 +40,11 @@ class MessageService(
             )
         }.onFailure { e ->
             logger.error("sendMessage 처리 실패 : ${e.message}", e)
-        }
+            throw RuntimeException("Transaction failed: ${e.message}", e)
+        }.getOrThrow()
     }
 
+    @Transactional
     fun getRecentTarotCount(minutes: Int, count: Long): Long {
         return runCatching {
             // 0 이상이면 텔레그램 메시지 전송
@@ -50,14 +54,15 @@ class MessageService(
                         "${count}건의 의식이 거행되었습니다."
                 try {
                     messageSender.sendMessage(message)
-                    logger.info("타로 활동 알림 전송 완료 ${count}건")
                 } catch (e: Exception) {
                     logger.error("텔레그램 메시지 전송 실패: ${e.message}", e)
+                    throw RuntimeException("Transaction failed: ${e.message}", e)
                 }
             }
             count
         }.onFailure { e ->
             logger.error("getRecentTarotCount 처리 실패 : ${e.message}", e)
-        }.getOrDefault(0L)
+            throw RuntimeException("Transaction failed: ${e.message}", e)
+        }.getOrThrow()
     }
 }
