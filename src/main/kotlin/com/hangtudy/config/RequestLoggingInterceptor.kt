@@ -13,6 +13,14 @@ import java.util.*
 class RequestLoggingInterceptor : HandlerInterceptor {
     
     private val logger = LoggerFactory.getLogger(RequestLoggingInterceptor::class.java)
+    private val securityLogger = LoggerFactory.getLogger("SECURITY")
+    
+    // 의심스러운 경로 패턴들
+    private val suspiciousPatterns = listOf(
+        ".php", ".asp", ".aspx", ".jsp", ".cgi",
+        "wp-admin", "wp-login", "wordpress", "phpmyadmin",
+        "admin", "login", "config", "backup", "dump", "shell", "cmd"
+    )
     
     override fun preHandle(
         request: HttpServletRequest,
@@ -21,12 +29,23 @@ class RequestLoggingInterceptor : HandlerInterceptor {
     ): Boolean {
         // 트랜잭션 ID 생성
         val transactionId = UUID.randomUUID().toString().substring(0, 8)
+        val clientIp = getClientIpAddress(request)
+        val userAgent = request.getHeader("User-Agent") ?: "Unknown"
         
         // MDC에 정보 설정
         MDC.put("X-HIT-TRANSACTION-ID", transactionId)
         MDC.put("X-HTTP-METHOD", request.method)
         MDC.put("X-HTTP-URL", request.requestURI)
-        MDC.put("X-CLIENT-IP", getClientIpAddress(request))
+        MDC.put("X-CLIENT-IP", clientIp)
+        
+        // 의심스러운 요청 체크
+        if (isSuspiciousRequest(request.requestURI, userAgent)) {
+            securityLogger.warn(
+                "SUSPICIOUS_REQUEST - IP: {}, Method: {}, URI: {}, User-Agent: {}, Referer: {}",
+                clientIp, request.method, request.requestURI, userAgent, 
+                request.getHeader("Referer") ?: "Direct"
+            )
+        }
         
         // API 요청 로그
         logger.info("API 요청 시작 - {} {}", request.method, request.requestURI)
@@ -75,13 +94,26 @@ class RequestLoggingInterceptor : HandlerInterceptor {
         val xRealIp = request.getHeader("X-Real-IP")
         val xForwarded = request.getHeader("X-Forwarded")
         val forwarded = request.getHeader("Forwarded")
+        val cfConnectingIp = request.getHeader("CF-Connecting-IP")
         
         return when {
             !xForwardedFor.isNullOrBlank() -> xForwardedFor.split(",")[0].trim()
             !xRealIp.isNullOrBlank() -> xRealIp
+            !cfConnectingIp.isNullOrBlank() -> cfConnectingIp
             !xForwarded.isNullOrBlank() -> xForwarded
             !forwarded.isNullOrBlank() -> forwarded
             else -> request.remoteAddr ?: "unknown"
         }
+    }
+    
+    private fun isSuspiciousRequest(uri: String, userAgent: String): Boolean {
+        val lowerUri = uri.lowercase()
+        val lowerUserAgent = userAgent.lowercase()
+        
+        return suspiciousPatterns.any { pattern -> lowerUri.contains(pattern) } ||
+               lowerUserAgent.contains("scanner") ||
+               lowerUserAgent.contains("curl") ||
+               lowerUserAgent.contains("wget") ||
+               userAgent.length < 10
     }
 }
