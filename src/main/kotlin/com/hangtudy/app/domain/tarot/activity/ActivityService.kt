@@ -1,6 +1,7 @@
 package com.hangtudy.app.domain.tarot.activity
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.hangtudy.app.domain.tarot.imagehistory.ImageHistory
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -36,7 +37,7 @@ class ActivityService(
             resultContent = resultContent,
             resultData = parsedResult
         )
-         activityRepository.save(activity)
+        activityRepository.save(activity)
     }.onFailure { exception ->
         logger.error("Transaction failed and will be rolled back: ${exception.message}", exception)
         when (exception) {
@@ -63,5 +64,29 @@ class ActivityService(
             logger.error("❌ Failed to count recent activities: ${e.message}", e)
             throw RuntimeException("Failed to count recent activities", e)
         }.getOrThrow()
+    }
+
+    @Transactional
+    fun updateActivityForImageHistory(imageHistory: ImageHistory) {
+        runCatching {
+            logger.info("🔄 Updating activity ${imageHistory.activityId} with image history ${imageHistory.id}")
+
+            val activity = activityRepository.findById(imageHistory.activityId)
+                ?: throw IllegalArgumentException("Activity not found with ID: ${imageHistory.activityId}")
+
+            val imageHistoryId = imageHistory.id
+                ?: throw IllegalArgumentException("ImageHistory ID is null")
+
+            val updatedActivity = activity.updateImageHistoryId(imageHistoryId)
+            activityRepository.save(updatedActivity)
+
+            logger.info("✅ Activity updated successfully with image history ID: $imageHistoryId")
+        }.onFailure { exception ->
+            logger.error("Failed to update activity with image history: ${exception.message}", exception)
+            when (exception) {
+                is RuntimeException -> throw exception
+                else -> throw RuntimeException("Failed to update activity: ${exception.message}", exception)
+            }
+        }
     }
 }

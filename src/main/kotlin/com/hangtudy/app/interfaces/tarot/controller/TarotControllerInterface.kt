@@ -1,5 +1,6 @@
 package com.hangtudy.app.interfaces.tarot.controller
 import com.hangtudy.app.interfaces.common.CommonRes
+import com.hangtudy.app.interfaces.tarot.req.AddImageHistoryReq
 import com.hangtudy.app.interfaces.tarot.req.AddTarotReq
 import com.hangtudy.app.interfaces.tarot.req.SendMessageReq
 import com.hangtudy.app.interfaces.tarot.res.GetTarotListRes
@@ -104,4 +105,31 @@ interface TarotControllerInterface {
         )
         @RequestParam(defaultValue = "10") limit: Int
     ): CommonRes<GetTarotListRes>
+
+    @PostMapping("/image-history")
+    @Operation(
+        summary = "이미지 히스토리 추가",
+        description = "이미지 저장 또는 공유 히스토리를 기록합니다."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200",
+            description = "이미지 히스토리 저장 성공",
+            content = [Content(schema = Schema(implementation = CommonRes::class))]
+        ),
+        ApiResponse(
+            responseCode = "400",
+            description = "잘못된 요청 데이터",
+            content = [Content(schema = Schema(implementation = CommonRes::class))]
+        ),
+        ApiResponse(
+            responseCode = "500",
+            description = "서버 내부 오류",
+            content = [Content(schema = Schema(implementation = CommonRes::class))]
+        )
+    ])
+    fun addImageHistory(
+        @Parameter(description = "이미지 히스토리 추가 요청", required = true)
+        @Valid @RequestBody req: AddImageHistoryReq
+    ): CommonRes<String>
 }

@@ -35,7 +35,10 @@ data class Activity(
     val createdAtKst: LocalDateTime,
 
     @Field("updated_at_kst")
-    val updatedAtKst: LocalDateTime
+    val updatedAtKst: LocalDateTime,
+
+    @Field("image_history_id")
+    val imageHistoryId: String? = null
 ) {
     companion object {
         fun create(
@@ -60,6 +63,17 @@ data class Activity(
                 updatedAtKst = nowKst
             )
         }
+    }
+
+    fun updateImageHistoryId(imageHistoryId: String): Activity {
+        val nowUtc = LocalDateTime.now()
+        val nowKst = nowUtc.plusHours(9)
+
+        return this.copy(
+            imageHistoryId = imageHistoryId,
+            updatedAt = nowUtc,
+            updatedAtKst = nowKst
+        )
     }
 
     data class TarotResult(

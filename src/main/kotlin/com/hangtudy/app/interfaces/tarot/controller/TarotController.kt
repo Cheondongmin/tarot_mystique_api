@@ -2,6 +2,7 @@ package com.hangtudy.app.interfaces.tarot.controller
 
 import com.hangtudy.app.application.TarotFacade
 import com.hangtudy.app.interfaces.common.CommonRes
+import com.hangtudy.app.interfaces.tarot.req.AddImageHistoryReq
 import com.hangtudy.app.interfaces.tarot.req.AddTarotReq
 import com.hangtudy.app.interfaces.tarot.req.SendMessageReq
 import com.hangtudy.app.interfaces.tarot.res.GetTarotListRes
@@ -40,5 +41,20 @@ class TarotController(
         val dto = tarotFacade.getTarotList(page, limit)
         val response = GetTarotListRes.from(dto)
         return CommonRes.success(response)
+    }
+
+    override fun addImageHistory(
+        @Valid @RequestBody req: AddImageHistoryReq
+    ): CommonRes<String> {
+        tarotFacade.addImageHistory(
+            req.activityId,
+            req.imageActionType,
+            req.userAgent,
+            req.browserName,
+            req.osName,
+            req.deviceType,
+            req.ipAddress
+        )
+        return CommonRes.success("이미지 히스토리 데이터가 성공적으로 저장되었습니다.")
     }
 }

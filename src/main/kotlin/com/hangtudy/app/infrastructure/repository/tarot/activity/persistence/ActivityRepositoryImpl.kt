@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.util.*
 
 @Repository
 class ActivityRepositoryImpl(
@@ -23,5 +24,9 @@ class ActivityRepositoryImpl(
     
     override fun findAll(pageable: Pageable): Page<Activity> {
         return activityMongoRepository.findAllByOrderByCreatedAtDesc(pageable)
+    }
+
+    override fun findById(id: String): Activity? {
+        return activityMongoRepository.findById(id).orElse(null)
     }
 }
