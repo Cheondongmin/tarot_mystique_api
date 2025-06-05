@@ -1,5 +1,6 @@
 package com.hangtudy.app.domain.tarot.imagehistory
 
+import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
@@ -11,7 +12,7 @@ data class ImageHistory(
     val id: String? = null,
 
     @Field("activity_id")
-    val activityId: String,
+    val activityId: ObjectId,
 
     @Field("action_type")
     val actionType: ImageActionType,
@@ -35,7 +36,7 @@ data class ImageHistory(
             val nowKst = nowUtc.plusHours(9)
 
             return ImageHistory(
-                activityId = activityId.trim(),
+                activityId = ObjectId(activityId.trim()),
                 actionType = actionType,
                 deviceInfo = deviceInfo,
                 createdAt = nowUtc,

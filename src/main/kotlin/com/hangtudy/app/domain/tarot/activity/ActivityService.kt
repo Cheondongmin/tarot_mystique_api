@@ -71,7 +71,7 @@ class ActivityService(
         runCatching {
             logger.info("🔄 Updating activity ${imageHistory.activityId} with image history ${imageHistory.id}")
 
-            val activity = activityRepository.findById(imageHistory.activityId)
+            val activity = activityRepository.findById(imageHistory.activityId.toString())
                 ?: throw IllegalArgumentException("Activity not found with ID: ${imageHistory.activityId}")
 
             val imageHistoryId = imageHistory.id

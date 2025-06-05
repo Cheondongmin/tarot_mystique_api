@@ -48,7 +48,7 @@ class TarotController(
     ): CommonRes<String> {
         tarotFacade.addImageHistory(
             req.activityId,
-            req.imageActionType,
+            req.actionType,
             req.userAgent,
             req.browserName,
             req.osName,

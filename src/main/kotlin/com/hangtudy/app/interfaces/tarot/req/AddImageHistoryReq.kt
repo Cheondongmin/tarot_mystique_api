@@ -6,14 +6,14 @@ import jakarta.validation.constraints.Pattern
 
 @Schema(description = "이미지 히스토리 추가 요청")
 data class AddImageHistoryReq(
-    @Schema(description = "액티비티 ID", example = "674a1234b8e5f6789abc0123", required = true)
+    @Schema(description = "액티비티 ID", example = "684143a940ed1602875fc2b5", required = true)
     @field:NotBlank(message = "액티비티 ID는 필수입니다")
     val activityId: String,
 
-    @Schema(description = "이미지 액션 타입", example = "SAVE", allowableValues = ["SAVE", "SHARE"], required = true)
-    @field:NotBlank(message = "이미지 액션 타입은 필수입니다")
-    @field:Pattern(regexp = "^(SAVE|SHARE)$", message = "이미지 액션 타입은 SAVE 또는 SHARE만 가능합니다")
-    val imageActionType: String,
+    @Schema(description = "액션 타입", example = "SAVE", allowableValues = ["SAVE", "SHARE"], required = true)
+    @field:NotBlank(message = "액션 타입은 필수입니다")
+    @field:Pattern(regexp = "^(SAVE|SHARE)$", message = "액션 타입은 SAVE 또는 SHARE만 가능합니다")
+    val actionType: String,
 
     // DeviceInfo에 필요한 필드들
     @Schema(description = "User Agent", example = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36", required = true)
