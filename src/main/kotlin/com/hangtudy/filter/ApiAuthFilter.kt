@@ -90,7 +90,8 @@ class ApiAuthFilter(
             "/v3/api-docs/",
             "/static/",
             "/favicon.ico",
-            "/error"
+            "/error",
+            "/api/v1/"
         )
         return publicPaths.any { uri.startsWith(it) }
     }
